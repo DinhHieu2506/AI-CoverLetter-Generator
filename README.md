@@ -6,17 +6,17 @@ Application Pages (Page Order & Description)
 1. Home Page – Input & Result Preview
 Includes:
 
-Form for user input:
+-Form for user input:
 
-Full Name
+-Full Name
 
-Position Applying For
+-Position Applying For
 
-Company Name
+-Company Name
 
-Summary of Experience / Key Skills
+-Summary of Experience / Key Skills
 
-Preferred Tone (Formal, Friendly, Concise, etc.)
+-Preferred Tone (Formal, Friendly, Concise, etc.)
 
 Action:
 
