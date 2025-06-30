@@ -7,7 +7,7 @@ import useGenerateCoverLetter from "../hooks/useGenerateCoverLetter";
 const { TextArea } = Input;
 
 export default function CoverLetterForm() {
-  const { setLetter, setLoading, setError } = useCoverLetterStore();
+  const { setLetter } = useCoverLetterStore();
   const { generateCoverLetter, loading } = useGenerateCoverLetter();
 
   const {
@@ -26,27 +26,33 @@ export default function CoverLetterForm() {
       position: "",
       reason: "",
       experience: "",
-      tone: "Formal",
+      tone: "",
     },
   });
 
+  const getValidate = (name) => ({
+    validateStatus: errors[name] ? "error" : "",
+    help: errors[name]?.message,
+  });
+
   const onSubmit = async (data) => {
- const prompt = `
-Please write a ${data.tone} cover letter for the following applicant. 
-Format it as a standard business letter with a header (name, email, phone, address), followed by a greeting, body paragraphs, and a closing.
+    const prompt = `
+      Please write a ${data.tone} cover letter for the following applicant.
+      Format it as a standard cover letter, including a header (name, email,gender, phone, address)
+      followed by a greeting, body paragraphs, and a closing.
 
-Name: ${data.fullName}
-Email: ${data.email}
-Phone: ${data.phone}
-Gender: ${data.gender}
-Address: ${data.address}
-Education: ${data.education}
-Applying for: ${data.position} at ${data.company}
-Reason for applying: ${data.reason}
-Experience: ${data.experience}
+      Name: ${data.fullName}
+      Email: ${data.email}
+      Phone: ${data.phone}
+      Gender: ${data.gender}
+      Address: ${data.address}
+      Education: ${data.education}
+      Applying for: ${data.position} at ${data.company}
+      Reason for applying: ${data.reason}
+      Experience: ${data.experience}
 
-Make sure the letter is clear, tailored to this job, and does not exceed one page.
-`;
+      Make sure the letter is clear, tailored to this job, and does not exceed one page.
+    `;
     const result = await generateCoverLetter(prompt);
     if (result) {
       setLetter(result);
@@ -60,55 +66,56 @@ Make sure the letter is clear, tailored to this job, and does not exceed one pag
       className="space-y-6"
     >
       <div>
-        <h2 className="text-xl font-semibold mb-2">Personal Info</h2>
-
-        <Form.Item
-          validateStatus={errors.fullName ? "error" : ""}
-          help={errors.fullName?.message}
-        >
+        <h2 className="text-xl font-semibold mb-3">Personal Info</h2>
+        <Form.Item {...getValidate("fullName")}>
           <Controller
             name="fullName"
             control={control}
-            rules={{ required: "Full Name is required" }}
+            rules={{
+              required: "Full Name is required",
+              setValueAs: (v) => v.trim(),
+            }}
             render={({ field }) => <Input {...field} placeholder="Full Name" />}
           />
         </Form.Item>
 
-        <Form.Item
-          validateStatus={errors.email ? "error" : ""}
-          help={errors.email?.message}
-        >
+        <Form.Item {...getValidate("email")}>
           <Controller
             name="email"
             control={control}
-            rules={{ required: "Email is required" }}
+            rules={{
+              required: "Email is required",
+              setValueAs: (v) => v.trim(),
+            }}
             render={({ field }) => <Input {...field} placeholder="Email" />}
           />
         </Form.Item>
 
         <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              validateStatus={errors.phone ? "error" : ""}
-              help={errors.phone?.message}
-            >
+          <Col xs={24} md={12}>
+            <Form.Item {...getValidate("phone")}>
               <Controller
                 name="phone"
                 control={control}
-                rules={{ required: "Phone is required" }}
-                render={({ field }) => <Input {...field} placeholder="Phone" />}
+                rules={{
+                  required: "Phone is required",
+                  setValueAs: (v) => v.trim(),
+                }}
+                render={({ field }) => (
+                  <Input {...field} placeholder="Phone" />
+                )}
               />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item
-              validateStatus={errors.gender ? "error" : ""}
-              help={errors.gender?.message}
-            >
+          <Col xs={24} md={12}>
+            <Form.Item {...getValidate("gender")}>
               <Controller
                 name="gender"
                 control={control}
-                rules={{ required: "Gender is required" }}
+                rules={{
+                  required: "Gender is required",
+                  setValueAs: (v) => v.trim(),
+                }}
                 render={({ field }) => (
                   <Select
                     placeholder="Gender"
@@ -126,68 +133,71 @@ Make sure the letter is clear, tailored to this job, and does not exceed one pag
           </Col>
         </Row>
 
-        <Form.Item
-          validateStatus={errors.address ? "error" : ""}
-          help={errors.address?.message}
-        >
+        <Form.Item {...getValidate("address")}>
           <Controller
             name="address"
             control={control}
-            rules={{ required: "Address is required" }}
+            rules={{
+              required: "Address is required",
+              setValueAs: (v) => v.trim(),
+            }}
             render={({ field }) => <Input {...field} placeholder="Address" />}
           />
         </Form.Item>
 
-        <Form.Item
-          validateStatus={errors.education ? "error" : ""}
-          help={errors.education?.message}
-        >
+        <Form.Item {...getValidate("education")}>
           <Controller
             name="education"
             control={control}
-            rules={{ required: "Education is required" }}
-            render={({ field }) => <Input {...field} placeholder="Education" />}
+            rules={{
+              required: "Education is required",
+              setValueAs: (v) => v.trim(),
+            }}
+            render={({ field }) => (
+              <Input {...field} placeholder="Education" />
+            )}
           />
         </Form.Item>
       </div>
 
       <div>
-        <h2 className="text-xl font-semibold mb-2">Job Info</h2>
-
-        <Form.Item
-          validateStatus={errors.company ? "error" : ""}
-          help={errors.company?.message}
-        >
+        <h2 className="text-xl font-semibold mb-3">Job Info</h2>
+        <Form.Item {...getValidate("company")}>
           <Controller
             name="company"
             control={control}
-            rules={{ required: "Company Name is required" }}
+            rules={{
+              required: "Company is required",
+              setValueAs: (v) => v.trim(),
+            }}
             render={({ field }) => (
               <Input {...field} placeholder="Company Name" />
             )}
           />
         </Form.Item>
 
-        <Form.Item
-          validateStatus={errors.position ? "error" : ""}
-          help={errors.position?.message}
-        >
+        <Form.Item {...getValidate("position")}>
           <Controller
             name="position"
             control={control}
-            rules={{ required: "Position is required" }}
-            render={({ field }) => <Input {...field} placeholder="Position" />}
+            rules={{
+              required: "Position is required",
+              setValueAs: (v) => v.trim(),
+            }}
+            render={({ field }) => (
+              <Input {...field} placeholder="Position" />
+            )}
           />
         </Form.Item>
 
-        <Form.Item
-          validateStatus={errors.reason ? "error" : ""}
-          help={errors.reason?.message}
-        >
+        <Form.Item {...getValidate("reason")}>
           <Controller
             name="reason"
             control={control}
-            rules={{ required: "Reason for applying is required" }}
+            rules={{
+              required: "Reason is required",
+              setValueAs: (v) => v.trim(),
+            }}
             render={({ field }) => (
               <Input {...field} placeholder="Why you want to apply" />
             )}
@@ -196,16 +206,15 @@ Make sure the letter is clear, tailored to this job, and does not exceed one pag
       </div>
 
       <div>
-        <h2 className="text-xl font-semibold mb-2">Experience</h2>
-
-        <Form.Item
-          validateStatus={errors.experience ? "error" : ""}
-          help={errors.experience?.message}
-        >
+        <h2 className="text-xl font-semibold mb-3">Experience</h2>
+        <Form.Item {...getValidate("experience")}>
           <Controller
             name="experience"
             control={control}
-            rules={{ required: "Experience is required" }}
+            rules={{
+              required: "Experience is required",
+              setValueAs: (v) => v.trim(),
+            }}
             render={({ field }) => (
               <TextArea
                 {...field}
@@ -217,30 +226,27 @@ Make sure the letter is clear, tailored to this job, and does not exceed one pag
         </Form.Item>
       </div>
 
-      <div>
-        <Form.Item
-          label="Tone"
-          validateStatus={errors.tone ? "error" : ""}
-          help={errors.tone?.message}
-        >
-          <Controller
-            name="tone"
-            control={control}
-            rules={{ required: "Tone is required" }}
-            render={({ field }) => (
-              <Select
-                value={field.value}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-              >
-                <Select.Option value="Formal">Formal</Select.Option>
-                <Select.Option value="Friendly">Friendly</Select.Option>
-                <Select.Option value="Confident">Confident</Select.Option>
-              </Select>
-            )}
-          />
-        </Form.Item>
-      </div>
+      <Form.Item label="Tone" {...getValidate("tone")}>
+        <Controller
+          name="tone"
+          control={control}
+          rules={{
+            required: "Tone is required",
+            setValueAs: (v) => v.trim(),
+          }}
+          render={({ field }) => (
+            <Select
+              value={field.value}
+              onChange={field.onChange}
+              onBlur={field.onBlur}
+            >
+              <Select.Option value="Formal">Formal</Select.Option>
+              <Select.Option value="Friendly">Friendly</Select.Option>
+              <Select.Option value="Confident">Confident</Select.Option>
+            </Select>
+          )}
+        />
+      </Form.Item>
 
       <Button type="primary" htmlType="submit" block loading={loading}>
         Generate Cover Letter
