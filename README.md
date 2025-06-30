@@ -2,7 +2,7 @@ Challenge: AI Cover Letter Generator
 🎯 Objective
 Build a web application that enables users to generate personalized cover letters using an AI API. Users will input basic job application information, and the system will return a well-formatted, editable, and downloadable cover letter.
 
-🧩 Application Pages (Page Order & Description)
+# Application Pages (Page Order & Description)
 1. Home Page – Input & Result Preview
 Includes:
 
@@ -40,7 +40,7 @@ Action Buttons:
 
 🔗 Copy to clipboard
 
-🛠️ Technologies Used
+## Technologies Used
 Frontend: React.js (with Hooks)
 
 Styling: Tailwind CSS or modern UI framework
@@ -56,7 +56,7 @@ Zustand or Context API (state handling)
 
 html-docx-js or jspdf (for exporting to .docx or .pdf)
 
-✅ Core Requirements & Features
+### Core Requirements & Features
 Input Fields:
 
 Full Name
@@ -90,7 +90,7 @@ Clean, professional, and resume-like layout
 
 Optimized for reading and user-friendly editing
 
-🎯 Challenge Goals
+#### Challenge Goals
 Practice AI integration in a real-world, content-focused application
 
 Improve understanding of async API communication
