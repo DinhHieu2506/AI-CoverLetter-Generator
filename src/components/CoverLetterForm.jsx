@@ -36,23 +36,31 @@ export default function CoverLetterForm() {
   });
 
   const onSubmit = async (data) => {
-    const prompt = `
-      Please write a ${data.tone} cover letter for the following applicant.
-      Format it as a standard cover letter, including a header (name, email,gender, phone, address)
-      followed by a greeting, body paragraphs, and a closing.
+  const prompt = `
+You are an expert career coach and professional copywriter. 
+Please write a personalized ${data.tone} cover letter for the applicant based on the details below.
 
-      Name: ${data.fullName}
-      Email: ${data.email}
-      Phone: ${data.phone}
-      Gender: ${data.gender}
-      Address: ${data.address}
-      Education: ${data.education}
-      Applying for: ${data.position} at ${data.company}
-      Reason for applying: ${data.reason}
-      Experience: ${data.experience}
+Make the letter:
+- Well-structured in standard business letter format with a header (name, email, gender, phone, address)
+- Include a tailored greeting, compelling opening, detailed body paragraphs, and a strong closing.
+- Highlight the applicant's education, key experiences and skills, and explain clearly why they are a strong fit for the ${data.position} role at ${data.company}.
+- Emphasize the applicant's motivation: "${data.reason}"
+- Ensure it is under one page, polished and engaging.
 
-      Make sure the letter is clear, tailored to this job, and does not exceed one page.
-    `;
+Here is the applicant's information:
+- Name: ${data.fullName}
+- Email: ${data.email}
+- Phone: ${data.phone}
+- Gender: ${data.gender}
+- Address: ${data.address}
+- Education: ${data.education}
+- Applying for: ${data.position} at ${data.company}
+- Reason for applying: ${data.reason}
+- Key experiences & skills: ${data.experience}
+
+Thank you!
+`;
+
     const result = await generateCoverLetter(prompt);
     if (result) {
       setLetter(result);
