@@ -19,9 +19,9 @@ export default function CoverLetterPreview() {
           placeholder="Cover Letter Title"
           value={title}
           onChange={(e) =>
-            useCoverLetterStore.getState().setTitle(e.target.value)
+            useCoverLetterStore.getState().setTitle(e.target.value.trim())
           }
-          disabled={!letter} // 
+          disabled={!letter}
           className="flex-1 min-w-[200px] font-semibold text-lg"
         />
         <ActionButtons editableRef={editableRef} title={title} />

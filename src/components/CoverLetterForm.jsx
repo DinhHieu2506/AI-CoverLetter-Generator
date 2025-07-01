@@ -25,6 +25,7 @@ export default function CoverLetterForm() {
       company: "",
       position: "",
       reason: "",
+      reference: "",
       experience: "",
       tone: "",
     },
@@ -36,30 +37,41 @@ export default function CoverLetterForm() {
   });
 
   const onSubmit = async (data) => {
-  const prompt = `
-You are an expert career coach and professional copywriter. 
-Please write a personalized ${data.tone} cover letter for the applicant based on the details below.
+   const prompt = `
+You are a professional career coach and expert copywriter.
 
-Make the letter:
-- Well-structured in standard business letter format with a header (name, email, gender, phone, address)
-- Include a tailored greeting, compelling opening, detailed body paragraphs, and a strong closing.
-- Highlight the applicant's education, key experiences and skills, and explain clearly why they are a strong fit for the ${data.position} role at ${data.company}.
-- Emphasize the applicant's motivation: "${data.reason}"
-- Ensure it is under one page, polished and engaging.
+Write a fully finished, polished ${data.tone} cover letter for the position of ${data.position} at ${data.company}.
 
-Here is the applicant's information:
+The applicant details are:
 - Name: ${data.fullName}
 - Email: ${data.email}
-- Phone: ${data.phone}
 - Gender: ${data.gender}
+- Phone: ${data.phone}
 - Address: ${data.address}
+- Reference: ${data.reference}
 - Education: ${data.education}
-- Applying for: ${data.position} at ${data.company}
-- Reason for applying: ${data.reason}
 - Key experiences & skills: ${data.experience}
+- Motivation: ${data.reason}
 
-Thank you!
+Instructions:
+- Use ONLY the actual details above. Do NOT use any placeholder text (like [Name], [Company], etc.) — always use the real input.
+- Start with a header including the applicant's name, email, phone, address, and today’s date.
+- Then write a personalized greeting (e.g., "Dear Hiring Manager,").
+- Follow with an opening paragraph that introduces ${data.fullName} and expresses interest in the ${data.position} role.
+- In the body paragraphs, highlight their education (${data.education}), emphasize key experiences and skills (${data.experience}), and clearly demonstrate why they are an excellent fit for ${data.company}.
+- Include a paragraph discussing their motivation: "${data.reason}", connecting it to personal values and long-term career goals.
+- Conclude with a strong closing paragraph showing enthusiasm for an interview and gratitude for the opportunity.
+- End with a professional sign-off like "Sincerely" or "Best regards".
+
+Important:
+- The letter must be completely finalized with NO placeholders, brackets, or instructions left inside.
+- All fields must be filled with the user's real input. If a field is empty, omit it from the letter.
+- Keep it concise (under one page), professional, and error-free.
+
+ONLY output the final cover letter — no notes or extra explanations.
 `;
+
+
 
     const result = await generateCoverLetter(prompt);
     if (result) {
@@ -109,9 +121,7 @@ Thank you!
                   required: "Phone is required",
                   setValueAs: (v) => v.trim(),
                 }}
-                render={({ field }) => (
-                  <Input {...field} placeholder="Phone" />
-                )}
+                render={({ field }) => <Input {...field} placeholder="Phone" />}
               />
             </Form.Item>
           </Col>
@@ -161,9 +171,7 @@ Thank you!
               required: "Education is required",
               setValueAs: (v) => v.trim(),
             }}
-            render={({ field }) => (
-              <Input {...field} placeholder="Education" />
-            )}
+            render={({ field }) => <Input {...field} placeholder="Education" />}
           />
         </Form.Item>
       </div>
@@ -192,9 +200,7 @@ Thank you!
               required: "Position is required",
               setValueAs: (v) => v.trim(),
             }}
-            render={({ field }) => (
-              <Input {...field} placeholder="Position" />
-            )}
+            render={({ field }) => <Input {...field} placeholder="Position" />}
           />
         </Form.Item>
 
@@ -212,6 +218,23 @@ Thank you!
           />
         </Form.Item>
       </div>
+
+            <div>
+      <Form.Item {...getValidate("reference")}>
+          <Controller
+            name="reference"
+            control={control}
+            rules={{
+              required: "Reference is required",
+              setValueAs: (v) => v.trim(),
+            }}
+            render={({ field }) => (
+              <Input {...field} placeholder="I know  this recruitment from... " />
+            )}
+          />
+        </Form.Item>
+      </div>
+
 
       <div>
         <h2 className="text-xl font-semibold mb-3">Experience</h2>
