@@ -46,8 +46,8 @@ Features
 #### Design Preference
 • Clean, professional, resume-like layout optimized for reading
 ##### Challenge Goals
-• Practice AI integration in a content-based real-world use case
-• Improve understanding of async API communication
-• Enhance user experience through editable AI content
-• Practice downloading/exporting documents in web apps
-• Build a job-focused, practical AI tool
+•	Practice AI integration in a content-based real-world use case
+•	Improve understanding of async API communication
+•	Enhance user experience through editable AI content
+•	Practice downloading/exporting documents in web apps
+•	Build a job-focused, practical AI tool
