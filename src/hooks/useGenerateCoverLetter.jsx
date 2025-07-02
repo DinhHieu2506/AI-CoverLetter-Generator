@@ -11,9 +11,11 @@ export default function useGenerateCoverLetter() {
     setError(null);
     message.loading({ content: "Generating...", key: "gen" });
 
+    const model = import.meta.env.VITE_GEMINI_MODEL
+
     try {
       const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
