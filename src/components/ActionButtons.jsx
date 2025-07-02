@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Tooltip, message, Dropdown, Menu } from "antd";
 import { EyeOutlined, CopyOutlined, DownloadOutlined } from "@ant-design/icons";
-import { downloadPdf, downloadDocx } from "../untils/exportFile";
+import { downloadPdf, downloadDocx } from "../utils/exportFile";
 import useCoverLetterStore from "../store/useCoverLetterStore";
 
 export default function ActionButtons({ editableRef, title }) {
